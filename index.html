@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+
+    </header>
+    <main>
+        <form id="form" action="">
+            <label>ID <span></span></label>
+            <input
+              id="idInput"
+              placeholder="1000"
+              type="text"
+              name = 'id'
+              required
+            />
+            <label>Full Name <span></span></label>
+            <input name="name" required id="nameInput" placeholder="John Doe" type="text" />
+            <label for="">Department <span></span></label>
+            <select name="idDepartment" required id="idDepartment">
+              <option disabled selected value="">Choose Department</option>
+              <option>Administration</option>
+              <option>Marketing</option>
+              <option>Development</option>
+              <option>Finance</option>
+            </select>
+            <label for="">Level <span></span></label>
+            <select name="idLevel" required id="idLevel">
+              <option disabled selected value="">Choose Level</option>
+              <option value="Junior">Junior</option>
+              <option value="Mid-Senior">Mid-Senior</option>
+              <option value="Senior">Senior</option>
+            </select>
+            <label for="">Image <span></span> </label>
+            <input name="img" id="idImage" placeholder="http:...png/.jpg/.jpeg" type="text" />
+            <button id="idSubmit" type="submit">Submit</button>
+          </form>
+          <div id="cards">
+
+          </div>
+    </main>
+    <footer>
+
+    </footer>
+    <script src="./app.js"></script>
+</body>
+</html>
