@@ -1,104 +1,123 @@
 
-// const cardsDiv = document.getElementById("cards");
-// const form = document.getElementById("form");
-// let allEmployees = [] ;
+const cardsDiv = document.getElementById("cards");
+const form = document.getElementById("form");
+let allEmployees = [] ;
 
-// function Employee (employeeID,fullName,department,level,imageURL ){
-// this.employeeID = employeeID
-// this.fullName =  fullName
-// this.department =  department
-// this.level = level 
-// this.imageURL = imageURL
-// this.salary = this.calcSalary(level);
-// }
+function Employee (employeeID,fullName,department,level,imageURL ){
+this.employeeID = employeeID
+this.fullName =  fullName
+this.department =  department
+this.level = level 
+this.imageURL = imageURL
+this.salary = this.calcSalary(level);
+}
 
-// Employee.prototype.calcSalary = function (level){
-//     switch (level) {
-//         case "Junior":
-//           return Math.round(Math.random() * (2000 - 1500) + 1500);
-//           break;
-//         case "Mid-Senior":
-//           return Math.round(Math.random() * (1500 - 1000) + 1000);
-//           break;
-//         case "Senior":
-//           return Math.round(Math.random() * (1000 - 500) + 500);
-//           break;
-//       }
-// }
-// const emp1 = new Employee(0,'israa othman', 'test', 'Junior','test');
-// // emp1.salary = emp1.calcSalary(emp1.level);
-
-// console.log(emp1);
+Employee.prototype.calcSalary = function (level){
+    switch (level) {
+        case "Junior":
+          return Math.round(Math.random() * (2000 - 1500) + 1500);
+          break;
+        case "Mid-Senior":
+          return Math.round(Math.random() * (1500 - 1000) + 1000);
+          break;
+        case "Senior":
+          return Math.round(Math.random() * (1000 - 500) + 500);
+          break;
+      }
+}
+const emp1 = new Employee(0,'israa othman', 'test', 'Junior','test');
+// emp1.salary = emp1.calcSalary(emp1.level);
 
 
 
 
-// function render (event) {
-//   event.preventDefault();
 
-//   let id = event.target.id.value; 
-//   let name = event.target.name.value; 
-//   let dept = event.target.idDepartment.value; 
-//   let level = event.target.idLevel.value; 
-//   let img = event.target.img.value; 
+function render (event) {
+  event.preventDefault();
 
-//   let newEmp = new Employee(id,name,dept,level,img);
-//   console.log(newEmp,'********************');
-//   allEmployees.push(newEmp);
+  let id = event.target.id.value; 
+  let name = event.target.name.value; 
+  let dept = event.target.idDepartment.value; 
+  let level = event.target.idLevel.value; 
+  let img = event.target.img.value; 
 
-//   saveToLocal();
-//   print(newEmp);
+  let newEmp = new Employee(id,name,dept,level,img);
+  console.log(newEmp,'********************');
+  allEmployees.push(newEmp);
 
-//   document.forms[0].reset();
-// }
+  saveToLocal();
+  print(newEmp);
 
-
-// function print(employee){
-
-//    let card = document.createElement('div');
-//    cardsDiv.appendChild(card);
-
-//    let img = document.createElement('img');
-//    card.appendChild(img);
-//    img.setAttribute('src',employee.imageURL);
-
-//    let p = document.createElement('p');
-//    card.appendChild(p);
-//    p.textContent = "Name " + employee.fullName + "- ID " + employee.employeeID ;
+  document.forms[0].reset();
+}
 
 
-//    let p2 = document.createElement('p');
-//    card.appendChild(p2);
-//    p2.textContent = `Department: ${employee.department} - Level: ${employee.level}`;
+function print(employee){
 
-//    let p3 = document.createElement('p');
-//    card.appendChild(p3);
-//    p3.textContent = employee.salary;
+   let card = document.createElement('div');
+   card.setAttribute("id",`${employee.employeeID}`);
+   cardsDiv.appendChild(card);
 
-// }
+   let img = document.createElement('img');
+   card.appendChild(img);
+   img.setAttribute('src',employee.imageURL);
 
-// function saveToLocal(){
-//    let strArr = JSON.stringify(allEmployees);
-//    localStorage.setItem('employees', strArr); 
-// }
+   let p = document.createElement('p');
+   card.appendChild(p);
+   p.textContent = "Name " + employee.fullName + "- ID " + employee.employeeID ;
 
-// function getFromLocal(){
-//    let jsonArr = localStorage.getItem('employees');
-//    let arr = JSON.parse(jsonArr);
 
-//    if(arr != null){
-//     allEmployees = arr;
-//     arr.forEach((ele)=>{
-//       print(ele);
-//      })
-//    }
+   let p2 = document.createElement('p');
+   card.appendChild(p2);
+   p2.textContent = `Department: ${employee.department} - Level: ${employee.level}`;
 
-//    console.log(arr);
-// }
+   let p3 = document.createElement('p');
+   card.appendChild(p3);
+   p3.textContent = employee.salary;
 
-// getFromLocal();
+   let deleteBtn = document.createElement('button');
+   card.appendChild(deleteBtn);
+   deleteBtn.innerText = 'Delete';
+   deleteBtn.setAttribute("id",`${employee.employeeID}`);
+   deleteBtn.setAttribute("name",`id`);
 
-// form.addEventListener('submit',render);
+
+   deleteBtn.addEventListener('click',()=>{
+      deleteFromLocal(employee.employeeID);
+      console.log( employee.employeeID);
+   })
+
+}
+
+function deleteFromLocal(id){
+   allEmployees = allEmployees.filter(emp =>{
+      if(emp.employeeID != id) return true;
+    });
+    saveToLocal();
+    // here you have to call the render function in your code to re-print the objects from the updated array 
+}
+
+function saveToLocal(){
+   let strArr = JSON.stringify(allEmployees);
+   localStorage.setItem('employees', strArr); 
+}
+
+function getFromLocal(){
+   let jsonArr = localStorage.getItem('employees');
+   let arr = JSON.parse(jsonArr);
+
+   if(arr != null){
+    allEmployees = arr;
+    arr.forEach((ele)=>{
+      print(ele);
+     })
+   }
+
+}
+
+getFromLocal();
+
+form.addEventListener('submit',render);
 
 
 
@@ -129,10 +148,10 @@
 //   }
 // });
 
-let sum = arr.reduce((acc,value,idx)=>{
-      acc = acc + value; 
-      return acc;
-},0);
+// let sum = arr.reduce((acc,value,idx)=>{
+//       acc = acc + value; 
+//       return acc;
+// },0);
 
 
-console.log(sum);
+// console.log(sum);
